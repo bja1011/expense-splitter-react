@@ -5,7 +5,7 @@ import React from 'react';
 import {AUTH_LOGIN_PATH, INDEX_PATH, MANAGE_PATH, SETTINGS_PATH} from "../../constants/RouterConstants";
 import {Link} from "react-router-dom";
 import './Header.css';
-import {AppBar, Button, IconButton, Toolbar, Typography} from "material-ui";
+import {AppBar, Button, IconButton, Toolbar, Typography} from 'material-ui'
 import MenuIcon from 'material-ui-icons/Menu';
 
 /**
@@ -22,13 +22,15 @@ const Header = () => {
           <Typography type="title" color="inherit">
             Expense splitter
           </Typography>
-          <Link to={{pathname: INDEX_PATH}}><Button raised color="primary">Dashboard</Button></Link>
-          <Link to={{pathname: MANAGE_PATH}}><Button raised color="primary">Manage</Button></Link>
-          <Link to={{pathname: SETTINGS_PATH}}><Button raised color="primary">Settings</Button></Link>
           <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>
         </Toolbar>
       </AppBar>
 
+      <div className="temp-nav">
+        <Link to={{pathname: INDEX_PATH}}><Button raised color="primary">Dashboard</Button></Link>
+        <Link to={{pathname: MANAGE_PATH}}><Button raised color="primary">Manage</Button></Link>
+        <Link to={{pathname: SETTINGS_PATH}}><Button raised color="primary">Settings</Button></Link>
+      </div>
     </header>
   )
 }

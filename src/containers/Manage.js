@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import axiosInstance from './../utils/ApiUtils'
-import Button from "material-ui/es/Button/Button";
+import {Button} from "material-ui";
 
 /**
  * Expenses manage container
