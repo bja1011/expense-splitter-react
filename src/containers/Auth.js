@@ -4,31 +4,71 @@
 import React, {Component} from 'react';
 import AppInput from "../components/UI/Input/AppInput";
 import {Button} from "material-ui";
+import _ from 'lodash';
+import login from '../utils/AuthUtils';
 
 export default class Auth extends Component {
 
   state = {
     loginForm: {
       username: {
-        elementType: 'input',
         elementConfig: {
-          type: 'text',
-          placeholder: 'Username',
+          type: 'input',
+          label: 'Username',
           name: 'username'
         },
-        value: 'asd'
+        value: '',
+        valid: false,
+        dirty: false,
+        validation: {
+          required: true,
+        }
       },
       password: {
-        elementType: 'input',
         elementConfig: {
           type: 'password',
-          placeholder: 'Password',
+          label: 'Password',
           name: 'password'
         },
-        value: ''
+        value: '',
+        valid: false,
+        dirty: false,
+        validation: {
+          required: true
+        }
       }
-    }
+    },
+    loginFormValid: false,
+    user: null
   };
+
+  checkValidity(value, rules) {
+    let isValid = false;
+
+    if (rules.required) {
+      isValid = value.trim() !== '';
+    }
+
+    return isValid;
+  }
+
+  inputChangeHandler(event, inputId) {
+    let newLoginForm = _.cloneDeep(this.state.loginForm);
+    let field = newLoginForm[inputId];
+    field.value = event.target.value;
+    field.dirty = true;
+    field.valid = this.checkValidity(field.value, field.validation);
+
+    let formIsValid = true;
+    Object.keys(this.state.loginForm).map((key) => {
+      formIsValid = formIsValid && this.state.loginForm[key].valid;
+    });
+
+    this.setState({
+      loginForm: newLoginForm,
+      loginFormValid: formIsValid
+    })
+  }
 
   loginFormControls() {
     return Object.keys(this.state.loginForm).map((key) => {
@@ -37,13 +77,38 @@ export default class Auth extends Component {
       return (
         <AppInput
           key={key}
-          type={field.elementType}
-          label={field.elementConfig.placeholder}
+          elementconfig={field.elementConfig}
           value={field.value}
-          onChange={(event)=>{console.log(event.target.value)}}
+          onChange={(event) => this.inputChangeHandler(event, key)}
+          valid={field.valid}
+          dirty={field.dirty}
         />
       )
     })
+  }
+
+  submitLoginForm(event) {
+    event.preventDefault();
+
+    let formData = {};
+
+    Object.keys(this.state.loginForm).map((key) => {
+      formData[key] = this.state.loginForm[key].value;
+    });
+
+    login(formData.username, formData.password)
+      .then((resp) => {
+        this.setState({user: resp.data});
+      })
+  }
+
+  loginForm() {
+    return (
+      <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
+        {this.loginFormControls()}
+        <Button disabled={!this.state.loginFormValid} type="submit" color="accent">Login</Button>
+      </form>
+    )
   }
 
   render() {
@@ -51,10 +116,7 @@ export default class Auth extends Component {
     return (
       <div>
         <h1>Auth</h1>
-        <form>
-          {this.loginFormControls()}
-          <Button color="accent">Login</Button>
-        </form>
+        {!this.state.user ? this.loginForm() : `Logged as ${this.state.user.email}`}
       </div>
     )
   }

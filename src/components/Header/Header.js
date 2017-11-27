@@ -22,10 +22,10 @@ const Header = () => {
           <Typography type="title" color="inherit">
             Expense splitter
           </Typography>
-          <Link to={{pathname: INDEX_PATH}}><Button  raised color="accent">Dashboard</Button></Link>
+          <Link to={{pathname: INDEX_PATH}}><Button raised color="primary">Dashboard</Button></Link>
           <Link to={{pathname: MANAGE_PATH}}><Button raised color="primary">Manage</Button></Link>
           <Link to={{pathname: SETTINGS_PATH}}><Button raised color="primary">Settings</Button></Link>
-          <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="primary">Login</Button></Link>
+          <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>
         </Toolbar>
       </AppBar>
 

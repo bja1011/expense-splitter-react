@@ -1,0 +1,4 @@
+.invalid {
+  color: red; }
+  .invalid input {
+    border: solid 1px red; }
