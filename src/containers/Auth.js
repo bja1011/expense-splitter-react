@@ -6,8 +6,10 @@ import AppInput from "../components/UI/Input/AppInput";
 import {Button} from "material-ui";
 import _ from 'lodash';
 import login from '../utils/AuthUtils';
+import * as actionTypes from "../store/actions";
+import {connect} from "react-redux";
 
-export default class Auth extends Component {
+class Auth extends Component {
 
   state = {
     loginForm: {
@@ -39,7 +41,6 @@ export default class Auth extends Component {
       }
     },
     loginFormValid: false,
-    user: null
   };
 
   checkValidity(value, rules) {
@@ -98,7 +99,8 @@ export default class Auth extends Component {
 
     login(formData.username, formData.password)
       .then((resp) => {
-        this.setState({user: resp.data});
+        // this.setState({user: resp.data});
+        this.props.onUserAuthSuccess(resp.data)
       })
   }
 
@@ -116,8 +118,25 @@ export default class Auth extends Component {
     return (
       <div>
         <h1>Auth</h1>
-        {!this.state.user ? this.loginForm() : `Logged as ${this.state.user.email}`}
+        {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUserAuthSuccess: (user) => dispatch({
+      type: actionTypes.USER_AUTH_SUCCESS,
+      user: user
+    }),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

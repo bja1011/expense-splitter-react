@@ -21,4 +21,4 @@ const login = (username, password) => {
   })
 };
 
-export  default login;
+export default login;

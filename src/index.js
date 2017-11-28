@@ -5,10 +5,17 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from "react-router-dom";
 import 'typeface-roboto'
+import {Provider} from "react-redux";
+import reducer from './store/reducer';
+import {createStore} from "redux";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </Provider>
   , document.getElementById('root'));
 registerServiceWorker();
