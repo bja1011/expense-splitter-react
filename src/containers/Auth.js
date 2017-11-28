@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import AppInput from "../components/UI/Input/AppInput";
-import {Button} from "material-ui";
+import {Button, CircularProgress} from "material-ui";
 import _ from 'lodash';
 import login from '../utils/AuthUtils';
 import * as actionTypes from "../store/actions";
@@ -91,6 +91,7 @@ class Auth extends Component {
   submitLoginForm(event) {
     event.preventDefault();
 
+    this.props.onUserAuthStart();
     let formData = {};
 
     Object.keys(this.state.loginForm).map((key) => {
@@ -99,7 +100,6 @@ class Auth extends Component {
 
     login(formData.username, formData.password)
       .then((resp) => {
-        // this.setState({user: resp.data});
         this.props.onUserAuthSuccess(resp.data)
       })
   }
@@ -108,13 +108,14 @@ class Auth extends Component {
     return (
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
-        <Button disabled={!this.state.loginFormValid} type="submit" color="accent">Login</Button>
+        <Button disabled={!this.state.loginFormValid} type="submit" color="accent">
+          Login {this.props.loading && <CircularProgress size={24} />}
+        </Button>
       </form>
     )
   }
 
   render() {
-
     return (
       <div>
         <h1>Auth</h1>
@@ -126,7 +127,8 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    loading: state.loading
   }
 };
 
@@ -135,6 +137,9 @@ const mapDispatchToProps = dispatch => {
     onUserAuthSuccess: (user) => dispatch({
       type: actionTypes.USER_AUTH_SUCCESS,
       user: user
+    }),
+    onUserAuthStart: (user) => dispatch({
+      type: actionTypes.USER_AUTH_START
     }),
   }
 };
