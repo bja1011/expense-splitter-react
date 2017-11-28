@@ -21,4 +21,9 @@ const login = (username, password) => {
   })
 };
 
+const logout = () => {
+  localStorage.removeItem('idToken');
+  localStorage.removeItem('refreshToken');
+}
+
 export default login;

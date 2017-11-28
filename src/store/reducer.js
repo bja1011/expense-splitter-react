@@ -18,6 +18,14 @@ const reducer = (state = initialState, action) => {
       };
 
       break;
+
+    case actionTypes.USER_LOGOUT:
+      return {
+        ..._.cloneDeep(state),
+        user: null
+      };
+
+      break;
   }
   return state;
 };
