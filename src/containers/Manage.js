@@ -6,7 +6,6 @@ import {Button, Grid, Paper, Tooltip, withStyles} from "material-ui";
 import {apiRequest} from "../utils/ApiUtils";
 import ExpensesList from "../components/ExpensesList";
 import moment from "moment";
-import AddIcon from 'material-ui-icons/Add';
 
 const styles = theme => ({
   fab: {
@@ -17,7 +16,7 @@ const styles = theme => ({
     position: 'absolute',
     bottom: 32,
     right: 32,
-  },
+  }
 });
 
 /**
@@ -67,19 +66,19 @@ class Manage extends Component {
     return (
       <div>
         <h1>Manage</h1>
-        <div>
+        <div className="container">
           <Button onClick={this.handleAddClick} raised color="primary">Add new expense</Button>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <Paper>
+                <ExpensesList expenses={this.state.expenses}/>
+              </Paper>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Paper className={classes.paper}>xs=6 sm=3</Paper>
+            </Grid>
+          </Grid>
         </div>
-        <div>
-          <Paper>
-            <ExpensesList expenses={this.state.expenses}/>
-          </Paper>
-        </div>
-        {/*<Tooltip  title="Add expense">*/}
-          {/*<Button fab color="accent" className={classes.absolute}>*/}
-            {/*<AddIcon />*/}
-          {/*</Button>*/}
-        {/*</Tooltip>*/}
       </div>
     )
   }
