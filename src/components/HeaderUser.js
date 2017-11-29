@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {IconButton, Menu, MenuItem} from "material-ui";
 import {AccountCircle} from "material-ui-icons";
-import * as actionTypes from "../store/actions";
 import {connect} from "react-redux";
+import * as actionTypes from "../store/actions/actionTypes";
 
 class HeaderUser extends Component {
 
@@ -54,9 +54,7 @@ class HeaderUser extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUserLogout: (user) => dispatch({
-      type: actionTypes.USER_LOGOUT
-    }),
+    onUserLogout: () => dispatch(actionTypes.USER_LOGOUT),
   }
 };
 

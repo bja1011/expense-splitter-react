@@ -6,8 +6,8 @@ import AppInput from "../components/UI/Input/AppInput";
 import {Button, CircularProgress} from "material-ui";
 import _ from 'lodash';
 import login from '../utils/AuthUtils';
-import * as actionTypes from "../store/actions";
 import {connect} from "react-redux";
+import * as actionTypes from "../store/actions/actionTypes";
 
 class Auth extends Component {
 
@@ -109,7 +109,7 @@ class Auth extends Component {
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
         <Button disabled={!this.state.loginFormValid} type="submit" color="accent">
-          Login {this.props.loading && <CircularProgress size={24} />}
+          Login {this.props.loading && <CircularProgress size={24}/>}
         </Button>
       </form>
     )
@@ -134,13 +134,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUserAuthSuccess: (user) => dispatch({
-      type: actionTypes.USER_AUTH_SUCCESS,
-      user: user
-    }),
-    onUserAuthStart: (user) => dispatch({
-      type: actionTypes.USER_AUTH_START
-    }),
+    onUserAuthSuccess: (user) => dispatch(actionTypes.userAuthSuccess(user)),
+    onUserAuthStart: () => dispatch(actionTypes.userLogout())
   }
 };
 

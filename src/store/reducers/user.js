@@ -2,7 +2,7 @@
  * Created by adam on 28.11.17.
  */
 import * as _ from "lodash";
-import * as actionTypes from "../actions";
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   data: null
