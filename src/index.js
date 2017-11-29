@@ -6,12 +6,18 @@ import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from "react-router-dom";
 import 'typeface-roboto'
 import {Provider} from "react-redux";
-import reducer from './store/reducer';
-import {createStore, compose} from "redux";
+import {createStore, compose, combineReducers} from "redux";
+import userReducer from './store/reducers/user';
+import expensesReducer from './store/reducers/expenses';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer,composeEnhancers());
+const rootReducer = combineReducers({
+  user: userReducer,
+  expenses: expensesReducer
+});
+
+const store = createStore(rootReducer,composeEnhancers());
 
 ReactDOM.render(
   <Provider store={store}>

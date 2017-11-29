@@ -1,12 +1,11 @@
 /**
  * Created by adam on 28.11.17.
  */
-import * as actionTypes from './actions';
 import * as _ from "lodash";
+import * as actionTypes from "../actions";
 
 const initialState = {
-  user: null,
-  expenses: null
+  data: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,7 +13,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.USER_AUTH_SUCCESS:
       return {
         ..._.cloneDeep(state),
-        user: action.user
+        data: action.user
       };
 
       break;
@@ -22,7 +21,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.USER_LOGOUT:
       return {
         ..._.cloneDeep(state),
-        user: null
+        data: null
       };
 
       break;
