@@ -8,4 +8,9 @@ const axiosInstance = axios.create({
   baseURL: API_URL
 });
 
+export const request = (config) => {
+  let token = localStorage.getItem('idToken');
+  return axiosInstance[config.method](config.path+'?auth='+token,config.data);
+}
+
 export default axiosInstance;

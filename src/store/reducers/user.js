@@ -5,7 +5,8 @@ import * as _ from "lodash";
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  data: null
+  data: null,
+  token: localStorage.getItem('idToken')
 };
 
 const reducer = (state = initialState, action) => {

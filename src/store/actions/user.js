@@ -3,28 +3,19 @@
  */
 
 import * as actionTypes from "./actionTypes";
-import login from "../../utils/AuthUtils";
-
-export const authSuccess = (user) => {
-  return {
-    type: actionTypes.USER_AUTH_SUCCESS,
-    user: user
-  }
-};
+import login from "../../utils/UserUtils";
 
 export const auth = (user) => {
   return (dispatch) => {
     login(user.username, user.password)
-      .then((resp) => {
-        console.log(resp);
-        dispatch(authSuccess(resp.data))
-      })
-  }
-};
-
-export const logout = () => {
-  return {
-    type: actionTypes.USER_LOGOUT
+      .then(
+        (resp) => {
+          dispatch(authSuccess(resp.data))
+        },
+        (err) => {
+          dispatch(authFail(err))
+        }
+      )
   }
 };
 
@@ -33,3 +24,25 @@ export const authStart = () => {
     type: actionTypes.USER_AUTH_START
   }
 };
+
+export const authSuccess = (user) => {
+  return {
+    type: actionTypes.USER_AUTH_SUCCESS,
+    user: user
+  }
+};
+
+export const authFail = (error) => {
+  return {
+    type: actionTypes.USER_AUTH_FAIL,
+    error: error
+  }
+};
+
+
+export const logout = () => {
+  return {
+    type: actionTypes.USER_LOGOUT
+  }
+};
+

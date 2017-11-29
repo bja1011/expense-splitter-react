@@ -90,14 +90,14 @@ class Auth extends Component {
   submitLoginForm(event) {
     event.preventDefault();
 
-    this.props.authStart();
+    this.props.onAuthStart();
     let formData = {};
 
     Object.keys(this.state.loginForm).map((key) => {
       formData[key] = this.state.loginForm[key].value;
     });
 
-    this.props.auth(formData);
+    this.props.onAuth(formData);
 
   }
 
@@ -123,17 +123,16 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.user.data,
-    loading: state.loading
+    loading: state.loading,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    auth: (userData) => dispatch(actionCreators.auth(userData)),
-    authStart: () => dispatch(actionCreators.authStart())
+    onAuth: (userData) => dispatch(actionCreators.auth(userData)),
+    onAuthStart: () => dispatch(actionCreators.authStart())
   }
 };
 

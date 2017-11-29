@@ -2,8 +2,8 @@
  * Created by adam on 26.11.17.
  */
 import React, {Component} from 'react';
-import axiosInstance from './../utils/ApiUtils'
 import {Button} from "material-ui";
+import {request} from "../utils/ApiUtils";
 
 /**
  * Expenses manage container
@@ -15,9 +15,12 @@ export default class Manage extends Component {
   };
 
   getExpenses = () => {
-    axiosInstance.get('/expenses.json')
+    request({
+      path: '/expenses.json',
+      method: 'get'
+    })
       .then(resp => this.setState({expenses: resp.data}))
-  }
+  };
 
   handleAddClick = () => {
     let postData = {
@@ -26,7 +29,11 @@ export default class Manage extends Component {
       userId: 1
     };
 
-    axiosInstance.post('/expenses.json', postData)
+    request({
+      path: '/expenses.json',
+      method: 'post',
+      data: postData
+    })
       .then(resp => this.getExpenses())
       .catch(resp => console.log(resp))
   };

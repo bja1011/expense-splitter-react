@@ -13,11 +13,16 @@ const login = (username, password) => {
         returnSecureToken: true
       }
     )
-      .then((resp) => {
-        localStorage.setItem('idToken', resp.data.idToken)
-        localStorage.setItem('refreshToken', resp.data.refreshToken)
-        resolve(resp)
-      })
+      .then(
+        (resp) => {
+          localStorage.setItem('idToken', resp.data.idToken)
+          localStorage.setItem('refreshToken', resp.data.refreshToken)
+          resolve(resp)
+        },
+        (err) => {
+          reject(err);
+        }
+      )
   })
 };
 

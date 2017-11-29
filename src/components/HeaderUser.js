@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {IconButton, Menu, MenuItem} from "material-ui";
 import {AccountCircle} from "material-ui-icons";
 import {connect} from "react-redux";
-import * as actionTypes from "../store/actions/actionTypes";
+import * as actionCreators from "../store/actions/index";
 
 class HeaderUser extends Component {
 
@@ -54,7 +54,7 @@ class HeaderUser extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUserLogout: () => dispatch(actionTypes.USER_LOGOUT),
+    onUserLogout: () => dispatch(actionCreators.logout()),
   }
 };
 
