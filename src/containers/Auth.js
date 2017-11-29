@@ -5,9 +5,8 @@ import React, {Component} from 'react';
 import AppInput from "../components/UI/Input/AppInput";
 import {Button, CircularProgress} from "material-ui";
 import _ from 'lodash';
-import login from '../utils/AuthUtils';
 import {connect} from "react-redux";
-import * as actionTypes from "../store/actions/actionTypes";
+import * as actionCreators from "../store/actions/index";
 
 class Auth extends Component {
 
@@ -91,17 +90,15 @@ class Auth extends Component {
   submitLoginForm(event) {
     event.preventDefault();
 
-    this.props.onUserAuthStart();
+    this.props.authStart();
     let formData = {};
 
     Object.keys(this.state.loginForm).map((key) => {
       formData[key] = this.state.loginForm[key].value;
     });
 
-    login(formData.username, formData.password)
-      .then((resp) => {
-        this.props.onUserAuthSuccess(resp.data)
-      })
+    this.props.auth(formData);
+
   }
 
   loginForm() {
@@ -126,6 +123,7 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
     user: state.user.data,
     loading: state.loading
@@ -134,8 +132,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUserAuthSuccess: (user) => dispatch(actionTypes.userAuthSuccess(user)),
-    onUserAuthStart: () => dispatch(actionTypes.userLogout())
+    auth: (userData) => dispatch(actionCreators.auth(userData)),
+    authStart: () => dispatch(actionCreators.authStart())
   }
 };
 

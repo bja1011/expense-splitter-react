@@ -16,7 +16,7 @@ const login = (username, password) => {
       .then((resp) => {
         localStorage.setItem('idToken', resp.data.idToken)
         localStorage.setItem('refreshToken', resp.data.refreshToken)
-        resolve(resp);
+        resolve(resp)
       })
   })
 };
