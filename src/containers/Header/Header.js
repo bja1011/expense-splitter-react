@@ -8,13 +8,13 @@ import './Header.css';
 import {AppBar, Button, IconButton, Toolbar, Typography} from 'material-ui'
 import MenuIcon from 'material-ui-icons/Menu';
 import {connect} from "react-redux";
-import HeaderUser from "../HeaderUser";
+import HeaderUser from "../../components/HeaderUser";
+import PropTypes from 'prop-types';
 
 /**
  * Main navigation component
  */
 class Header extends Component {
-
   render() {
     return (
       <header className="App-header">
@@ -42,6 +42,10 @@ class Header extends Component {
       </header>
     )
   }
+}
+
+Header.propTypes = {
+  user: PropTypes.object
 };
 
 const mapStateToProps = state => {

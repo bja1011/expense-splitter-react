@@ -43,7 +43,7 @@ class HeaderUser extends Component {
           open={this.state.menuOpen}
           onRequestClose={this.handleRequestClose}
         >
-          <MenuItem onClick={this.handleRequestClose}>Profile</MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>{this.props.user.email}</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
           <MenuItem onClick={this.handleRequestClose.bind(this,'logout')}>Logout</MenuItem>
         </Menu>
