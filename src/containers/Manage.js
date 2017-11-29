@@ -2,20 +2,35 @@
  * Created by adam on 26.11.17.
  */
 import React, {Component} from 'react';
-import {Button} from "material-ui";
-import {request} from "../utils/ApiUtils";
+import {Button, Grid, Paper, Tooltip, withStyles} from "material-ui";
+import {apiRequest} from "../utils/ApiUtils";
+import ExpensesList from "../components/ExpensesList";
+import moment from "moment";
+import AddIcon from 'material-ui-icons/Add';
+
+const styles = theme => ({
+  fab: {
+    margin: theme.spacing.unit * 2,
+  },
+  absolute: {
+    flip: false,
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+  },
+});
 
 /**
  * Expenses manage container
  */
-export default class Manage extends Component {
+class Manage extends Component {
 
   state = {
     expenses: []
   };
 
   getExpenses = () => {
-    request({
+    apiRequest({
       path: '/expenses.json',
       method: 'get'
     })
@@ -25,11 +40,13 @@ export default class Manage extends Component {
   handleAddClick = () => {
     let postData = {
       name: "test",
-      value: "test",
-      userId: 1
+      value: Math.random() * 1000,
+      userId: 1,
+      date: moment().toDate(),
+      splits: Math.round(Math.random() * 10),
     };
 
-    request({
+    apiRequest({
       path: '/expenses.json',
       method: 'post',
       data: postData
@@ -42,12 +59,30 @@ export default class Manage extends Component {
     this.getExpenses();
   }
 
+
   render() {
+
+    const {classes} = this.props;
+
     return (
       <div>
         <h1>Manage</h1>
-        <Button onClick={this.handleAddClick} raised color="primary">Add</Button>
+        <div>
+          <Button onClick={this.handleAddClick} raised color="primary">Add new expense</Button>
+        </div>
+        <div>
+          <Paper>
+            <ExpensesList expenses={this.state.expenses}/>
+          </Paper>
+        </div>
+        {/*<Tooltip  title="Add expense">*/}
+          {/*<Button fab color="accent" className={classes.absolute}>*/}
+            {/*<AddIcon />*/}
+          {/*</Button>*/}
+        {/*</Tooltip>*/}
       </div>
     )
   }
 }
+
+export default withStyles(styles)(Manage);

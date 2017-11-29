@@ -15,8 +15,9 @@ const login = (username, password) => {
     )
       .then(
         (resp) => {
-          localStorage.setItem('idToken', resp.data.idToken)
-          localStorage.setItem('refreshToken', resp.data.refreshToken)
+          localStorage.setItem('idToken', resp.data.idToken);
+          localStorage.setItem('refreshToken', resp.data.refreshToken);
+          localStorage.setItem('user', JSON.stringify(resp.data));
           resolve(resp)
         },
         (err) => {
@@ -26,9 +27,14 @@ const login = (username, password) => {
   })
 };
 
-const logout = () => {
+export const isLogged = () => {
+  return localStorage.getItem('user');
+};
+
+export const logout = () => {
   localStorage.removeItem('idToken');
   localStorage.removeItem('refreshToken');
+  localStorage.removeItem('user');
 }
 
 export default login;

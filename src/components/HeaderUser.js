@@ -45,7 +45,7 @@ class HeaderUser extends Component {
         >
           <MenuItem onClick={this.handleRequestClose}>{this.props.user.email}</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
-          <MenuItem onClick={this.handleRequestClose.bind(this,'logout')}>Logout</MenuItem>
+          <MenuItem onClick={this.handleRequestClose.bind(this, 'logout')}>Logout</MenuItem>
         </Menu>
       </div>
     )
@@ -57,6 +57,5 @@ const mapDispatchToProps = dispatch => {
     onUserLogout: () => dispatch(actionCreators.logout()),
   }
 };
-
 
 export default connect(null, mapDispatchToProps)(HeaderUser);

@@ -6,5 +6,6 @@ export {
   auth,
   authStart,
   authFail,
-  logout
+  logout,
+  apiError
 } from './user';

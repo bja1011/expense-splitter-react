@@ -3,9 +3,10 @@
  */
 import * as _ from "lodash";
 import * as actionTypes from "../actions/actionTypes";
+import {logout} from "../../utils/UserUtils";
 
 const initialState = {
-  data: null,
+  data: JSON.parse(localStorage.getItem('user')),
   token: localStorage.getItem('idToken')
 };
 
@@ -20,6 +21,8 @@ const reducer = (state = initialState, action) => {
       break;
 
     case actionTypes.USER_LOGOUT:
+
+      logout();
       return {
         ..._.cloneDeep(state),
         data: null

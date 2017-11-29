@@ -39,10 +39,8 @@ export const authFail = (error) => {
   }
 };
 
-
 export const logout = () => {
   return {
     type: actionTypes.USER_LOGOUT
   }
 };
-

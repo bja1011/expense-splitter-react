@@ -7,6 +7,8 @@ import {Button, CircularProgress} from "material-ui";
 import _ from 'lodash';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions/index";
+import {Redirect} from "react-router-dom";
+import {INDEX_PATH} from "../constants/RouterConstants";
 
 class Auth extends Component {
 
@@ -117,6 +119,7 @@ class Auth extends Component {
       <div>
         <h1>Auth</h1>
         {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
+        {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
       </div>
     )
   }
