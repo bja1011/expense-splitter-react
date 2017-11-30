@@ -6,6 +6,10 @@ export {
   auth,
   authStart,
   authFail,
-  logout,
-  apiError
+  logout
 } from './user';
+export {
+  fetchExpensesSuccess,
+  fetchExpensesFail,
+  fetchExpenses
+} from './expenses';

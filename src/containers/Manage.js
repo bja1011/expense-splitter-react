@@ -3,21 +3,13 @@
  */
 import React, {Component} from 'react';
 import {Button, Grid, Paper, Tooltip, withStyles} from "material-ui";
+import AddIcon from 'material-ui-icons/Add';
 import {apiRequest} from "../utils/ApiUtils";
 import ExpensesList from "../components/ExpensesList";
 import moment from "moment";
+import './Manage.css';
 
-const styles = theme => ({
-  fab: {
-    margin: theme.spacing.unit * 2,
-  },
-  absolute: {
-    flip: false,
-    position: 'absolute',
-    bottom: 32,
-    right: 32,
-  }
-});
+const styles = theme => ({});
 
 /**
  * Expenses manage container
@@ -38,7 +30,7 @@ class Manage extends Component {
 
   handleAddClick = () => {
     let postData = {
-      name: "test",
+      name: "tes as sdf dsf d",
       value: Math.random() * 1000,
       userId: 1,
       date: moment().toDate(),
@@ -55,7 +47,7 @@ class Manage extends Component {
   };
 
   componentDidMount() {
-    this.getExpenses();
+    if (!this.state.expenses.length) this.getExpenses();
   }
 
 
@@ -64,18 +56,20 @@ class Manage extends Component {
     const {classes} = this.props;
 
     return (
-      <div>
+      <div className="Manage">
         <h1>Manage</h1>
         <div className="container">
-          <Button onClick={this.handleAddClick} raised color="primary">Add new expense</Button>
           <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <Paper>
-                <ExpensesList expenses={this.state.expenses}/>
-              </Paper>
+            <Grid item xs={12} sm={6}>
+              <h2>
+                Expenses <Button fab color="accent" aria-label="add" className={classes.button}>
+                <AddIcon/>
+              </Button>
+              </h2>
+              <ExpensesList expenses={this.state.expenses}/>
             </Grid>
-            <Grid item xs={6} sm={3}>
-              <Paper className={classes.paper}>xs=6 sm=3</Paper>
+            <Grid item xs={12} sm={6}>
+              <h2>Events</h2>
             </Grid>
           </Grid>
         </div>
