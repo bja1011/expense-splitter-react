@@ -12,5 +12,6 @@ export {
   fetchExpensesSuccess,
   fetchExpensesFail,
   fetchExpenses,
-  addExpense
+  addExpense,
+  deleteExpense
 } from './expenses';

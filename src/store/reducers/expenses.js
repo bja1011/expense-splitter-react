@@ -10,22 +10,24 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 
-  switch(action.type) {
+  switch (action.type) {
     case actionyTypes.EXPENSE_FETCH_SUCCESS:
-
       return {
         ..._.cloneDeep(state),
         expenses: action.data
       };
-
       break;
 
     case actionyTypes.EXPENSE_ADD_SUCCESS:
-
       return {
         ..._.cloneDeep(state)
       };
+      break;
 
+    case actionyTypes.EXPENSE_DELETE_SUCCESS:
+      return {
+        ..._.cloneDeep(state)
+      };
       break;
   }
 

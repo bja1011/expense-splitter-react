@@ -31,6 +31,10 @@ export const isLogged = () => {
   return localStorage.getItem('user');
 };
 
+export const loggedUser = () => {
+  return JSON.parse(localStorage.getItem('user'));
+};
+
 export const logout = () => {
   localStorage.removeItem('idToken');
   localStorage.removeItem('refreshToken');

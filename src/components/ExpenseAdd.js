@@ -10,7 +10,7 @@ import './ExpenseAdd.css';
 import * as actionCreators from "../store/actions";
 import {connect} from "react-redux";
 import _ from 'lodash';
-import {isLogged} from "../utils/UserUtils";
+import {isLogged, loggedUser} from "../utils/UserUtils";
 
 
 class ExpenseAdd extends Component {
@@ -92,7 +92,7 @@ class ExpenseAdd extends Component {
     let postData = {
       name: this.state.addForm.name.value,
       value: this.state.addForm.value.value,
-      userId: isLogged().localId,
+      userId: loggedUser().localId,
       date: moment().toDate(),
       splits: this.state.addForm.splits.value,
     };

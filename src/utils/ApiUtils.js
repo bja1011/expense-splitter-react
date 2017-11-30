@@ -26,7 +26,8 @@ axiosInstance.interceptors.response.use(function (response) {
 export const apiRequest = (config) => {
   let token = localStorage.getItem('idToken');
   return new Promise((resolve, reject) => {
-    axiosInstance[config.method](config.path + '?auth=' + token, config.data)
+    if(!config.query) config.query = '';
+    axiosInstance[config.method](config.path + '?auth=' + token+config.query, config.data)
       .then(
         (resp) => resolve(resp),
         (err) => {

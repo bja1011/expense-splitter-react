@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import {doAddExpense, doFetchExpenses} from "../../utils/ExpensesUtils";
+import {doAddExpense, doDeleteExpense, doFetchExpenses} from "../../utils/ExpensesUtils";
 
 export const fetchExpensesSuccess = (data) => {
   return {
@@ -15,6 +15,13 @@ export const fetchExpensesFail = (data) => {
   }
 };
 
+export const deleteExpenseFail = (error) => {
+  return {
+    type: actionTypes.EXPENSE_FETCH_FAIL,
+    error: error
+  }
+};
+
 export const fetchExpenses = () => {
   return (dispatch) => {
     doFetchExpenses()
@@ -24,6 +31,20 @@ export const fetchExpenses = () => {
         },
         (err) => {
           dispatch(fetchExpensesFail(err))
+        }
+      )
+  }
+};
+
+export const deleteExpense = (expenseId) => {
+  return (dispatch) => {
+    doDeleteExpense(expenseId)
+      .then(
+        () => {
+          dispatch(fetchExpenses())
+        },
+        (err) => {
+          dispatch(deleteExpenseFail(err))
         }
       )
   }

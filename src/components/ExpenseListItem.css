@@ -1,2 +1,4 @@
 .ExpensesListItem {
   text-align: left; }
+  .ExpensesListItem .expenseListItemHeader {
+    background: #f5f5f5; }

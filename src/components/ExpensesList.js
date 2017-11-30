@@ -18,12 +18,14 @@ const ExpensesList = (props) => {
     }
   });
 
+  expenses = expenses.sort((a, b) => a.date > b.date)
+
   return (
     <div className="ExpensesList">
       <Grid container spacing={24}>
         {expenses.reverse().map(e => {
           return (
-            <Grid key={e.id}  item xs={12}>
+            <Grid key={e.id} item xs={12}>
               <ExpensesListItem item={e} classes={classes}/>
             </Grid>
           )
