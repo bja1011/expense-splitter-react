@@ -59,19 +59,6 @@ class Manage extends Component {
       <div className="Manage">
         <h1>Manage</h1>
         <div className="container">
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
-              <h2>
-                Expenses <Button fab color="accent" aria-label="add" className={classes.button}>
-                <AddIcon/>
-              </Button>
-              </h2>
-              <ExpensesList expenses={this.state.expenses}/>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <h2>Events</h2>
-            </Grid>
-          </Grid>
         </div>
       </div>
     )
