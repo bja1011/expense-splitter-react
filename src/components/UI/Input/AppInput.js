@@ -17,6 +17,7 @@ const AppInput = (props) => {
   switch (props.elementconfig.type) {
 
     case 'input':
+    case 'number':
       inputElement = <Input value={props.value} onChange={props.onChange} {...props.elementconfig}/>;
       break;
 

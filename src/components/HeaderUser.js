@@ -3,6 +3,8 @@ import {IconButton, Menu, MenuItem} from "material-ui";
 import {AccountCircle} from "material-ui-icons";
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions/index";
+import {SETTINGS_PATH} from "../constants/RouterConstants";
+import {Link} from "react-router-dom";
 
 class HeaderUser extends Component {
 
@@ -44,7 +46,7 @@ class HeaderUser extends Component {
           onRequestClose={this.handleRequestClose}
         >
           <MenuItem onClick={this.handleRequestClose}>{this.props.user.email}</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
+          <Link to={{pathname: SETTINGS_PATH}}><MenuItem onClick={this.handleRequestClose}>My account</MenuItem></Link>
           <MenuItem onClick={this.handleRequestClose.bind(this, 'logout')}>Logout</MenuItem>
         </Menu>
       </div>

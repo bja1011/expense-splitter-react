@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import AppInput from "./UI/Input/AppInput";
 import moment from "moment/moment";
-import {Button} from "material-ui";
+import {Button, CircularProgress, Paper, Typography} from "material-ui";
 import {Save} from "material-ui-icons";
 import './ExpenseAdd.css';
 import * as actionCreators from "../store/actions";
@@ -12,6 +12,11 @@ import {connect} from "react-redux";
 import _ from 'lodash';
 import {isLogged, loggedUser} from "../utils/UserUtils";
 
+const styles = {
+  addExpenseBox: {
+    padding: 20
+  }
+}
 class ExpenseAdd extends Component {
 
   state = {
@@ -31,7 +36,7 @@ class ExpenseAdd extends Component {
       },
       value: {
         elementConfig: {
-          type: 'input',
+          type: 'number',
           label: 'Amount',
           name: 'value'
         },
@@ -44,7 +49,7 @@ class ExpenseAdd extends Component {
       },
       splits: {
         elementConfig: {
-          type: 'input',
+          type: 'number',
           label: 'Splits',
           name: 'splits'
         },
@@ -119,18 +124,33 @@ class ExpenseAdd extends Component {
   render() {
     return (
       <div className="ExpenseAdd">
-        {this.addFormControls()}
-        <div>
-          <Button disabled={!this.state.addFormValid} onClick={this.handleAddClick} color="accent" className="saveBtn"
-                  raised dense>
-            <Save/>
-            Save
-          </Button>
-        </div>
+        <Paper style={styles.addExpenseBox}>
+          <Typography component="h2">
+            Add new expense
+          </Typography>
+          {this.addFormControls()}
+          <div>
+            <Button disabled={!this.state.addFormValid || this.props.addingExpense}
+                    onClick={this.handleAddClick}
+                    color="accent" className="saveBtn"
+                    raised dense
+            >
+              <Save/>
+              {this.props.addingExpense ?
+                <CircularProgress className="deleteExpense" color="default" size={24}/> : 'Save'}
+            </Button>
+          </div>
+        </Paper>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    addingExpense: state.expenses.addingExpense
+  }
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -138,4 +158,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(ExpenseAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseAdd);

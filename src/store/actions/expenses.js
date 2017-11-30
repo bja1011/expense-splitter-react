@@ -1,27 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import {doAddExpense, doDeleteExpense, doFetchExpenses} from "../../utils/ExpensesUtils";
 
-export const fetchExpensesSuccess = (data) => {
-  return {
-    type: actionTypes.EXPENSE_FETCH_SUCCESS,
-    data: data
-  }
-};
-
-export const fetchExpensesFail = (data) => {
-  return {
-    type: actionTypes.EXPENSE_FETCH_FAIL,
-    error: data
-  }
-};
-
-export const deleteExpenseFail = (error) => {
-  return {
-    type: actionTypes.EXPENSE_FETCH_FAIL,
-    error: error
-  }
-};
-
 export const fetchExpenses = () => {
   return (dispatch) => {
     doFetchExpenses()
@@ -36,17 +15,75 @@ export const fetchExpenses = () => {
   }
 };
 
+export const fetchExpensesSuccess = (data) => {
+  return {
+    type: actionTypes.EXPENSE_FETCH_SUCCESS,
+    data: data
+  }
+};
+
+export const fetchExpensesFail = (data) => {
+  return {
+    type: actionTypes.EXPENSE_FETCH_FAIL,
+    error: data
+  }
+};
+
+export const deleteExpenseStart = (expenseId) => {
+  return {
+    type: actionTypes.EXPENSE_DELETE_START,
+    expenseId: expenseId
+  }
+};
+
+export const deleteExpenseFail = (error) => {
+  return {
+    type: actionTypes.EXPENSE_FETCH_FAIL,
+    error: error
+  }
+};
+
+export const deleteExpenseSuccess = () => {
+  return {
+    type: actionTypes.EXPENSE_DELETE_SUCCESS,
+  }
+};
+
 export const deleteExpense = (expenseId) => {
   return (dispatch) => {
+    dispatch(deleteExpenseStart(expenseId));
     doDeleteExpense(expenseId)
       .then(
         () => {
+          dispatch(deleteExpenseSuccess())
           dispatch(fetchExpenses())
         },
         (err) => {
           dispatch(deleteExpenseFail(err))
         }
       )
+  }
+};
+
+export const addExpense = (data) => {
+  return (dispatch) => {
+    dispatch(addExpenseStart())
+    doAddExpense(data)
+      .then(
+        () => {
+          dispatch(addExpenseSuccess())
+          dispatch(fetchExpenses())
+        },
+        (err) => {
+          dispatch(addExpenseFail(err))
+        }
+      )
+  }
+};
+
+export const addExpenseStart = () => {
+  return {
+    type: actionTypes.EXPENSE_ADD_START
   }
 };
 
@@ -60,20 +97,5 @@ export const addExpenseFail = (data) => {
   return {
     type: actionTypes.EXPENSE_ADD_FAIL,
     error: data
-  }
-};
-
-export const addExpense = (data) => {
-  return (dispatch) => {
-
-    doAddExpense(data)
-      .then(
-        () => {
-          dispatch(fetchExpenses())
-        },
-        (err) => {
-          dispatch(addExpenseFail(err))
-        }
-      )
   }
 };
