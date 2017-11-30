@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header/>
+        <Header user={this.props.user}/>
         <Routes auth={this.props.user}/>
       </div>
     );

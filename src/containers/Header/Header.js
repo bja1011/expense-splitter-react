@@ -6,34 +6,26 @@ import {AUTH_LOGIN_PATH, INDEX_PATH, MANAGE_PATH, SETTINGS_PATH} from "../../con
 import {Link} from "react-router-dom";
 import './Header.css';
 import {
-  AppBar, Button, createMuiTheme, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText,
-  MuiThemeProvider, Toolbar,
-  Typography,
-  withStyles
+  AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemText, Toolbar, Typography, withStyles
 } from 'material-ui'
 import MenuIcon from 'material-ui-icons/Menu';
-import {connect} from "react-redux";
 import HeaderUser from "../../components/HeaderUser";
 import PropTypes from 'prop-types';
-import purple from "material-ui/es/colors/purple";
-import green from "material-ui/es/colors/green";
-import red from "material-ui/es/colors/red";
 
-const styles = {
+const styles = theme => ({
+  root: {
+    width: '100%',
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
   drawer: {
-    width: 250,
+    width: 320,
   }
-};
-
-const theme = createMuiTheme({
-  // palette: {
-  //   primary: purple,
-  //   secondary: {
-  //     ...green,
-  //     A400: '#00e677',
-  //   },
-  //   error: red,
-  // }
 });
 
 /**
@@ -43,7 +35,7 @@ class Header extends Component {
 
   state = {
     drawerOpen: false
-  }
+  };
 
   toggleDrawer = () => {
     this.setState({
@@ -52,76 +44,71 @@ class Header extends Component {
   };
 
   render() {
-    return (
-      <MuiThemeProvider theme={theme}>
 
-        <header className="App-header">
-          <AppBar position="static" color="primary">
-            <Toolbar>
-              <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
-                <MenuIcon/>
-              </IconButton>
-              <Typography type="title" className="appTitle" color="inherit">
-                Expense splitter
-              </Typography>
-              <div className="userInfo">
-                {this.props.user ?
-                  <HeaderUser user={this.props.user}/>
-                  :
-                  <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>}
-              </div>
-            </Toolbar>
-          </AppBar>
-          <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer}>
-            <div
-              tabIndex={0}
-              role="button"
-              onClick={this.toggleDrawer}
-              onKeyDown={this.toggleDrawer}
-              style={styles.drawer}
-            >
-              <List>
-                <Link to={{pathname: INDEX_PATH}}>
-                  <ListItem button>
-                    <ListItemText primary="Dashboard"/>
-                  </ListItem>
-                </Link>
-                <Link to={{pathname: MANAGE_PATH}}>
-                  <ListItem button>
-                    <ListItemText primary="Manage"/>
-                  </ListItem>
-                </Link>
-                <Link to={{pathname: SETTINGS_PATH}}>
-                  <ListItem button>
-                    <ListItemText primary="Settings"/>
-                  </ListItem>
-                </Link>
-              </List>
-              <Divider/>
-              <List>
-                <ListItem button>
-                  <ListItemText primary="Placeholder"/>
-                </ListItem>
-                <ListItem button component="a" href="#simple-list">
-                  <ListItemText primary="Placeholder"/>
-                </ListItem>
-              </List>
+    const {classes} = this.props;
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
+              <MenuIcon/>
+            </IconButton>
+            <Typography type="title" className={classes.flex} color="inherit">
+              Expense splitter
+            </Typography>
+            <div className="userInfo">
+              {this.props.user ?
+                <HeaderUser user={this.props.user}/>
+                :
+                <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>}
             </div>
-          </Drawer>
-        </header>
-      </MuiThemeProvider>
+          </Toolbar>
+        </AppBar>
+        <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer}>
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer}
+            onKeyDown={this.toggleDrawer}
+            style={styles.drawer}
+          >
+            <List>
+              <Link to={{pathname: INDEX_PATH}}>
+                <ListItem button>
+                  <ListItemText primary="Dashboard"/>
+                </ListItem>
+              </Link>
+              <Link to={{pathname: MANAGE_PATH}}>
+                <ListItem button>
+                  <ListItemText primary="Manage"/>
+                </ListItem>
+              </Link>
+              <Link to={{pathname: SETTINGS_PATH}}>
+                <ListItem button>
+                  <ListItemText primary="Settings"/>
+                </ListItem>
+              </Link>
+            </List>
+            <Divider/>
+            <List>
+              <ListItem button>
+                <ListItemText primary="Placeholder"/>
+              </ListItem>
+              <ListItem button component="a" href="#simple-list">
+                <ListItemText primary="Placeholder"/>
+              </ListItem>
+            </List>
+          </div>
+        </Drawer>
+      </div>
     )
   }
 }
 
 Header.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
-  return {
-    user: state.user.data
-  }
-};
-
-export default withStyles(styles)(connect(mapStateToProps, null)(Header));
+export default withStyles(styles)(Header);

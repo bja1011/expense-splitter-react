@@ -12,10 +12,31 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case actionTypes.USER_AUTH_START:
+      return {
+        ..._.cloneDeep(state),
+        loading: true,
+        error: null
+      };
+
+      break;
+
+    case actionTypes.USER_AUTH_FAIL:
+      return {
+        ..._.cloneDeep(state),
+        loading: false,
+        error: action.error.response.data.error.message
+      };
+
+      break;
+
     case actionTypes.USER_AUTH_SUCCESS:
       return {
         ..._.cloneDeep(state),
-        data: action.user
+        data: action.user,
+        error: null,
+        loading: false
       };
 
       break;

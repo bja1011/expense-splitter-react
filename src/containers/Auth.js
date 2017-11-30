@@ -3,16 +3,28 @@
  */
 import React, {Component} from 'react';
 import AppInput from "../components/UI/Input/AppInput";
-import {Button, CircularProgress} from "material-ui";
+import {Button, CircularProgress, Paper, Typography, withStyles} from "material-ui";
 import _ from 'lodash';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions/index";
 import {Redirect} from "react-router-dom";
 import {INDEX_PATH} from "../constants/RouterConstants";
+import PropTypes from 'prop-types';
+import './Auth.css';
+
+const styles = theme => ({
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+  }),
+});
+
 
 class Auth extends Component {
 
   state = {
+    loading: false,
     loginForm: {
       username: {
         elementConfig: {
@@ -46,11 +58,9 @@ class Auth extends Component {
 
   checkValidity(value, rules) {
     let isValid = false;
-
     if (rules.required) {
       isValid = value.trim() !== '';
     }
-
     return isValid;
   }
 
@@ -77,49 +87,59 @@ class Auth extends Component {
       let field = this.state.loginForm[key];
 
       return (
-        <AppInput
-          key={key}
-          elementconfig={field.elementConfig}
-          value={field.value}
-          onChange={(event) => this.inputChangeHandler(event, key)}
-          valid={field.valid}
-          dirty={field.dirty}
-        />
+        <div>
+          <AppInput
+            key={key}
+            elementconfig={field.elementConfig}
+            value={field.value}
+            onChange={(event) => this.inputChangeHandler(event, key)}
+            valid={field.valid}
+            dirty={field.dirty}
+          />
+        </div>
       )
     })
   }
 
   submitLoginForm(event) {
     event.preventDefault();
-
     this.props.onAuthStart();
     let formData = {};
-
     Object.keys(this.state.loginForm).map((key) => {
       formData[key] = this.state.loginForm[key].value;
     });
-
     this.props.onAuth(formData);
-
   }
 
   loginForm() {
     return (
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
-        <Button disabled={!this.state.loginFormValid} type="submit" color="accent">
-          Login {this.props.loading && <CircularProgress size={24}/>}
+        <Button className="submitButton" disabled={!this.state.loginFormValid || this.props.loading} type="submit"
+                color="accent">
+          {this.props.loading ? <CircularProgress color="accent" size={24}/> : 'Login'}
         </Button>
       </form>
     )
   }
 
   render() {
+
+    const {classes} = this.props;
+
     return (
-      <div>
-        <h1>Auth</h1>
-        {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
-        {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
+      <div className="loginContainer">
+        <Paper className={classes.root} elevation={4}>
+          <Typography type="headline" component="h3">
+            Login
+          </Typography>
+          <Typography color="accent" component="p">
+            {this.props.error}
+          </Typography>
+          {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
+          {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
+        </Paper>
+
       </div>
     )
   }
@@ -128,7 +148,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.data,
-    loading: state.loading,
+    loading: state.user.loading,
+    error: state.user.error
   }
 };
 
@@ -139,4 +160,8 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+Auth.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Auth));
