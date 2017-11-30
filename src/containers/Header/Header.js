@@ -15,6 +15,9 @@ import MenuIcon from 'material-ui-icons/Menu';
 import {connect} from "react-redux";
 import HeaderUser from "../../components/HeaderUser";
 import PropTypes from 'prop-types';
+import purple from "material-ui/es/colors/purple";
+import green from "material-ui/es/colors/green";
+import red from "material-ui/es/colors/red";
 
 const styles = {
   drawer: {
@@ -23,10 +26,16 @@ const styles = {
 };
 
 const theme = createMuiTheme({
-  palette: {
-    type: 'dark', // Switching the dark mode on is a single property value change.
-  }
+  // palette: {
+  //   primary: purple,
+  //   secondary: {
+  //     ...green,
+  //     A400: '#00e677',
+  //   },
+  //   error: red,
+  // }
 });
+
 /**
  * Main navigation component
  */
@@ -37,7 +46,6 @@ class Header extends Component {
   }
 
   toggleDrawer = () => {
-    console.log('sdf')
     this.setState({
       drawerOpen: !this.state.drawerOpen
     });
@@ -48,7 +56,7 @@ class Header extends Component {
       <MuiThemeProvider theme={theme}>
 
         <header className="App-header">
-          <AppBar position="static">
+          <AppBar position="static" color="primary">
             <Toolbar>
               <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
                 <MenuIcon/>
@@ -89,7 +97,7 @@ class Header extends Component {
                   </ListItem>
                 </Link>
               </List>
-              <Divider />
+              <Divider/>
               <List>
                 <ListItem button>
                   <ListItemText primary="Placeholder"/>

@@ -23,7 +23,7 @@ const ExpensesList = (props) => {
       <Grid container spacing={24}>
         {expenses.reverse().map(e => {
           return (
-            <Grid key={e.id}  item xs={12} sm={6}>
+            <Grid key={e.id}  item xs={12}>
               <ExpensesListItem item={e} classes={classes}/>
             </Grid>
           )

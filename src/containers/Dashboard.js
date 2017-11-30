@@ -4,12 +4,11 @@
 import React, {Component} from 'react';
 import {Button, Grid, withStyles} from "material-ui";
 import AddIcon from 'material-ui-icons/Add';
-import {apiRequest} from "../utils/ApiUtils";
 import ExpensesList from "../components/ExpensesList";
-import moment from "moment";
 import './Dashboard.css';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions";
+import ExpenseAdd from "../components/ExpenseAdd";
 
 const styles = theme => ({});
 
@@ -18,27 +17,27 @@ const styles = theme => ({});
  */
 class Dashboard extends Component {
 
+  state = {
+    showAddExpenseBox: false
+  };
+
   getExpenses = () => {
     this.props.onFetchExpenses();
   };
 
-  handleAddClick = () => {
-    let postData = {
-      name: "tes as sdf dsf d",
-      value: Math.random() * 1000,
-      userId: 1,
-      date: moment().toDate(),
-      splits: Math.round(Math.random() * 10),
-    };
-
-    apiRequest({
-      path: '/expenses.json',
-      method: 'post',
-      data: postData
+  toggleAddExpenseBox = () => {
+    this.setState({
+      showAddExpenseBox: !this.state.showAddExpenseBox
     })
-      .then(resp => this.getExpenses())
-      .catch(resp => console.log(resp))
   };
+
+  addExpenseBox() {
+    return (
+      <Grid item xs={12}>
+        <ExpenseAdd/>
+      </Grid>
+    )
+  }
 
   componentDidMount() {
     this.getExpenses();
@@ -49,22 +48,32 @@ class Dashboard extends Component {
     const {classes} = this.props;
 
     return (
-      <div className="Manage">
-        <h1>Dashboard</h1>
-        <div className="container">
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={6}>
-              <h2>
-                Expenses <Button fab color="accent" aria-label="add" className={classes.button}>
-                <AddIcon/>
-              </Button>
-              </h2>
-              <ExpensesList expenses={this.props.expenses}/>
+      <div className="Dashboard">
+        <div className="page-container">
+          <h1>Dashboard</h1>
+          <div className="container">
+            <Grid container spacing={24}>
+              {this.state.showAddExpenseBox ? this.addExpenseBox() : null}
+              <Grid item xs={12} sm={6}>
+                <h2>
+                  Expenses <Button onClick={this.toggleAddExpenseBox}
+                                   color="accent" aria-label="add"
+                                   className={classes.button}>
+                  <AddIcon/>
+                </Button>
+                </h2>
+                <ExpensesList expenses={this.props.expenses}/>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <h2>Events <Button color="accent" aria-label="add"
+                                   disabled
+                                   className={classes.button}>
+                  <AddIcon/>
+                </Button>
+                </h2>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <h2>Events</h2>
-            </Grid>
-          </Grid>
+          </div>
         </div>
       </div>
     )
@@ -80,8 +89,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchExpenses: () => dispatch(actionCreators.fetchExpenses()),
+    onAddExpense: (data) => dispatch(actionCreators.addExpense(data)),
   }
 };
-
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

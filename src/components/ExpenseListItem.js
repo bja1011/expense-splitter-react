@@ -1,20 +1,29 @@
 import React from 'react';
 import moment from "moment/moment";
-import {Card, CardContent, Typography} from "material-ui";
-
+import {Avatar, Card, CardContent, CardHeader, IconButton, Typography} from "material-ui";
+import MoreVertIcon from 'material-ui-icons/MoreVert';
+import './ExpenseListItem.css'
 const ExpensesListItem = (props) => {
 
   const {classes, item} = props;
 
   return (
-    <Card className={classes.card} key={item.id}>
+    <Card className="ExpensesListItem" key={item.id}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="Recipe" className="avatar">
+            {item.name[0]}
+          </Avatar>
+        }
+        action={
+          <IconButton>
+            <MoreVertIcon/>
+          </IconButton>
+        }
+        title={item.name}
+        subheader={moment(item.date).format("YYYY-MM-DD")}
+      />
       <CardContent>
-        <Typography type="body1" className={classes.title}>
-          {moment(item.date).format("YYYY-MM-DD")}
-        </Typography>
-        <Typography type="headline" component="h2">
-          {item.name}
-        </Typography>
         <Typography type="body1" className={classes.pos}>
           Splits: {item.splits} - Value: {item.value}
         </Typography>

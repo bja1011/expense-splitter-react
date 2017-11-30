@@ -9,3 +9,11 @@ export const doFetchExpenses = () => {
     method: 'get',
   })
 }
+
+export const doAddExpense = (data) => {
+  return apiRequest({
+    path: '/expenses.json',
+    method: 'post',
+    data: data
+  })
+}

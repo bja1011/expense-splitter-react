@@ -19,6 +19,14 @@ const reducer = (state = initialState, action) => {
       };
 
       break;
+
+    case actionyTypes.EXPENSE_ADD_SUCCESS:
+
+      return {
+        ..._.cloneDeep(state)
+      };
+
+      break;
   }
 
   return state;
