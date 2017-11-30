@@ -1,4 +1,14 @@
 .ExpensesListItem {
-  text-align: left; }
+  text-align: left;
+  position: relative; }
+  .ExpensesListItem:hover .deleteExpense {
+    opacity: 1; }
   .ExpensesListItem .expenseListItemHeader {
     background: #f5f5f5; }
+  .ExpensesListItem .deleteExpense {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 0.5s ease-out; }
