@@ -8,7 +8,7 @@ import ExpensesList from "../components/ExpensesList";
 import './Dashboard.css';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions";
-import ExpenseAdd from "../components/ExpenseAdd";
+import ExpenseAddDialog from "../components/ExpenseAddDialog";
 
 const styles = theme => ({});
 
@@ -18,26 +18,20 @@ const styles = theme => ({});
 class Dashboard extends Component {
 
   state = {
-    showAddExpenseBox: false
+    showAddExpenseDialog: false
   };
 
   getExpenses = () => {
     this.props.onFetchExpenses();
   };
 
-  toggleAddExpenseBox = () => {
-    this.setState({
-      showAddExpenseBox: !this.state.showAddExpenseBox
-    })
-  };
-
-  addExpenseBox() {
-    return (
-      <Grid item xs={12}>
-        <ExpenseAdd/>
-      </Grid>
-    )
+  handleDialogOpen = () => {
+    this.setState({showAddExpenseDialog: true})
   }
+
+  handleDialogClose = () => {
+    this.setState({showAddExpenseDialog: false});
+  };
 
   componentDidMount() {
     this.getExpenses();
@@ -53,16 +47,15 @@ class Dashboard extends Component {
           <h1>Dashboard</h1>
           <div className="container">
             <Grid container spacing={24}>
-              {this.state.showAddExpenseBox ? this.addExpenseBox() : null}
               <Grid item xs={12} sm={6}>
                 <h2>
-                  Expenses <Button onClick={this.toggleAddExpenseBox}
+                  Expenses <Button onClick={this.handleDialogOpen}
                                    color="accent" aria-label="add"
                                    className={classes.button}>
                   <AddIcon/>
                 </Button>
                 </h2>
-                <ExpensesList expenses={this.props.expenses}/>
+                <ExpensesList addingExpense={this.props.addingExpense} expenses={this.props.expenses}/>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <h2>Events <Button color="accent" aria-label="add"
@@ -75,6 +68,14 @@ class Dashboard extends Component {
             </Grid>
           </div>
         </div>
+        {this.state.showAddExpenseDialog ?
+          <DialogWrapped
+            open={this.state.showAddExpenseDialog}
+            onRequestClose={this.handleDialogClose}
+            onAddExpense={this.props.onAddExpense}
+            addingExpense={this.props.addingExpense}
+          />
+          : null}
       </div>
     )
   }
@@ -82,15 +83,18 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    expenses: state.expenses.expenses
+    expenses: state.expenses.expenses,
+    addingExpense: state.expenses.addingExpense
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onFetchExpenses: () => dispatch(actionCreators.fetchExpenses()),
-    onAddExpense: (data) => dispatch(actionCreators.addExpense(data)),
+    onAddExpense: (data) => dispatch(actionCreators.addExpense(data))
   }
 };
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+
+const DialogWrapped = withStyles(styles)(ExpenseAddDialog);

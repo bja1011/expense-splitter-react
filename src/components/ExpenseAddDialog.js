@@ -1,23 +1,25 @@
 /**
- * Created by adam on 30.11.17.
+ * Created by adam on 3.12.17.
  */
 import React, {Component} from 'react';
 import AppInput from "./UI/Input/AppInput";
 import moment from "moment/moment";
-import {Button, CircularProgress, Paper, Typography} from "material-ui";
+import {Button, CircularProgress, Dialog, DialogTitle, Paper, Typography} from "material-ui";
 import {Save} from "material-ui-icons";
 import './ExpenseAdd.css';
-import * as actionCreators from "../store/actions";
-import {connect} from "react-redux";
 import _ from 'lodash';
-import {isLogged, loggedUser} from "../utils/UserUtils";
+import {loggedUser} from "../utils/UserUtils";
 
 const styles = {
   addExpenseBox: {
     padding: 20
   }
 }
-class ExpenseAdd extends Component {
+class ExpenseAddDialog extends Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   state = {
     addForm: {
@@ -102,6 +104,7 @@ class ExpenseAdd extends Component {
     };
 
     this.props.onAddExpense(postData);
+    this.props.onRequestClose();
   };
 
   addFormControls() {
@@ -122,40 +125,37 @@ class ExpenseAdd extends Component {
   }
 
   render() {
+
+    const {onRequestClose, ...other} = this.props;
+
     return (
-      <div className="ExpenseAdd">
-        <Paper style={styles.addExpenseBox}>
-          <Typography component="h2">
-            Add new expense
-          </Typography>
-          {this.addFormControls()}
-          <div>
-            <Button disabled={!this.state.addFormValid || this.props.addingExpense}
-                    onClick={this.handleAddClick}
-                    color="accent" className="saveBtn"
-                    raised dense
-            >
-              <Save/>
-              {this.props.addingExpense ?
-                <CircularProgress className="deleteExpense" color="default" size={24}/> : 'Save'}
-            </Button>
+      <Dialog onRequestClose={onRequestClose} {...other}>
+        <DialogTitle>Add expense</DialogTitle>
+        <div>
+          <div className="ExpenseAdd">
+            <Paper style={styles.addExpenseBox}>
+              <Typography component="h2">
+                Add new expense
+              </Typography>
+              {this.addFormControls()}
+              <div>
+                <Button disabled={!this.state.addFormValid || this.props.addingExpense}
+                        onClick={this.handleAddClick}
+                        color="accent" className="saveBtn"
+                        raised dense
+                >
+                  <Save/>
+                  {this.props.addingExpense ?
+                    <CircularProgress className="deleteExpense" color="primary" size={24}/> : 'Save'}
+                </Button>
+              </div>
+            </Paper>
           </div>
-        </Paper>
-      </div>
+        </div>
+      </Dialog>
+
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    addingExpense: state.expenses.addingExpense
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddExpense: (data) => dispatch(actionCreators.addExpense(data))
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseAdd);
+export default ExpenseAddDialog;

@@ -2,7 +2,7 @@
  * Created by adam on 29.11.17.
  */
 import React from 'react';
-import {Grid, withStyles} from "material-ui";
+import {CircularProgress, Grid, withStyles} from "material-ui";
 import ExpensesListItem from "./ExpenseListItem";
 
 const styles = theme => ({});
@@ -23,6 +23,8 @@ const ExpensesList = (props) => {
   return (
     <div className="ExpensesList">
       <Grid container spacing={24}>
+        {props.addingExpense ?
+          <CircularProgress className="deleteExpense" color="primary" size={24}/> : null}
         {expenses.reverse().map(e => {
           return (
             <Grid key={e.id} item xs={12}>

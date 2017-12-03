@@ -87,9 +87,8 @@ class Auth extends Component {
       let field = this.state.loginForm[key];
 
       return (
-        <div>
+        <div key={key}>
           <AppInput
-            key={key}
             elementconfig={field.elementConfig}
             value={field.value}
             onChange={(event) => this.inputChangeHandler(event, key)}

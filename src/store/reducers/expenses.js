@@ -23,7 +23,8 @@ const reducer = (state = initialState, action) => {
     case actionyTypes.EXPENSE_ADD_SUCCESS:
       return {
         ..._.cloneDeep(state),
-        addingExpense: false
+        addingExpense: false,
+
       };
       break;
 
