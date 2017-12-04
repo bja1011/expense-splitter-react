@@ -54,7 +54,7 @@ class Header extends Component {
             <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
               <MenuIcon/>
             </IconButton>
-            <Typography type="title" className={classes.flex} color="inherit">
+            <Typography type="title" className={classes.flex+' text-center'} color="inherit">
               Expense splitter
             </Typography>
             <div className="userInfo">

@@ -5,12 +5,18 @@ import React, {Component} from 'react';
 import {Button, Grid, withStyles} from "material-ui";
 import AddIcon from 'material-ui-icons/Add';
 import ExpensesList from "../components/ExpensesList";
-import './Dashboard.css';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions";
 import ExpenseAddDialog from "../components/ExpenseAddDialog";
+import styled from "styled-components";
 
 const styles = theme => ({});
+
+const H1 = styled.h1`
+  border-bottom: solid 1px #444;
+  padding-bottom: 10px;
+  text-align: center;
+`;
 
 /**
  * Expenses manage container
@@ -27,7 +33,7 @@ class Dashboard extends Component {
 
   handleDialogOpen = () => {
     this.setState({showAddExpenseDialog: true})
-  }
+  };
 
   handleDialogClose = () => {
     this.setState({showAddExpenseDialog: false});
@@ -44,7 +50,7 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard">
         <div className="page-container">
-          <h1>Dashboard</h1>
+          <H1>Dashboard</H1>
           <div className="container">
             <Grid container spacing={24}>
               <Grid item xs={12} sm={6}>

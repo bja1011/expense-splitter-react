@@ -2,12 +2,9 @@
  * Created by adam on 26.11.17.
  */
 import React, {Component} from 'react';
-import {Button, Grid, Paper, Tooltip, withStyles} from "material-ui";
-import AddIcon from 'material-ui-icons/Add';
+import {withStyles} from "material-ui";
 import {apiRequest} from "../utils/ApiUtils";
-import ExpensesList from "../components/ExpensesList";
 import moment from "moment";
-import './Manage.css';
 
 const styles = theme => ({});
 

@@ -10,7 +10,7 @@ import * as actionCreators from "../store/actions/index";
 import {Redirect} from "react-router-dom";
 import {INDEX_PATH} from "../constants/RouterConstants";
 import PropTypes from 'prop-types';
-import './Auth.css';
+import styled from "styled-components";
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -20,6 +20,17 @@ const styles = theme => ({
   }),
 });
 
+const LoginContainer = styled.div`
+  width: calc(100% - 40px);
+  max-width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+`;
+
+const LoginBtn = styled(Button)`
+    margin-top: 10px;
+`;
 
 class Auth extends Component {
 
@@ -114,10 +125,10 @@ class Auth extends Component {
     return (
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
-        <Button className="submitButton" disabled={!this.state.loginFormValid || this.props.loading} type="submit"
+        <LoginBtn className="submitButton" disabled={!this.state.loginFormValid || this.props.loading} type="submit"
                 color="accent">
           {this.props.loading ? <CircularProgress color="accent" size={24}/> : 'Login'}
-        </Button>
+        </LoginBtn>
       </form>
     )
   }
@@ -127,7 +138,7 @@ class Auth extends Component {
     const {classes} = this.props;
 
     return (
-      <div className="loginContainer">
+      <LoginContainer>
         <Paper className={classes.root} elevation={4}>
           <Typography type="headline" component="h3">
             Login
@@ -139,7 +150,7 @@ class Auth extends Component {
           {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
         </Paper>
 
-      </div>
+      </LoginContainer>
     )
   }
 }
