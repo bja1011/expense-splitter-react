@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import * as actionCreators from "../store/actions";
 import ExpenseAddDialog from "../components/ExpenseAddDialog";
 import styled from "styled-components";
+import WithModal from "../hoc/Modal";
 
 const styles = theme => ({});
 
@@ -75,12 +76,9 @@ class Dashboard extends Component {
           </div>
         </div>
         {this.state.showAddExpenseDialog ?
-          <DialogWrapped
-            open={this.state.showAddExpenseDialog}
-            onRequestClose={this.handleDialogClose}
-            onAddExpense={this.props.onAddExpense}
-            addingExpense={this.props.addingExpense}
-          />
+          <WithModal>
+            sad
+          </WithModal>
           : null}
       </div>
     )
