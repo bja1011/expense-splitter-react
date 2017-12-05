@@ -2,8 +2,9 @@
  * Created by adam on 27.11.17.
  */
 import React from 'react';
-import {FormControl, Input, InputLabel} from "material-ui";
+import {FormControl, InputLabel} from "material-ui";
 import './AppInput.css';
+import {Input} from "antd";
 
 const AppInput = (props) => {
 
@@ -29,10 +30,10 @@ const AppInput = (props) => {
 
   return (
     inputElement ?
-      <FormControl className={inputClasses}>
+      <Input.Group size="large">
         <InputLabel htmlFor={props.elementconfig.name}>{props.elementconfig.label}</InputLabel>
         {inputElement}
-      </FormControl> : null
+      </Input.Group> : null
   )
 
 };

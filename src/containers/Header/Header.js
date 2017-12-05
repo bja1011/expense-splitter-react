@@ -6,11 +6,12 @@ import {AUTH_LOGIN_PATH, INDEX_PATH, MANAGE_PATH, SETTINGS_PATH} from "../../con
 import {Link} from "react-router-dom";
 import './Header.css';
 import {
-  AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemText, Toolbar, Typography, withStyles
+  AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemText, Toolbar, Typography, withStyles
 } from 'material-ui'
 import MenuIcon from 'material-ui-icons/Menu';
 import HeaderUser from "../../components/HeaderUser";
 import PropTypes from 'prop-types';
+import {Button} from "antd";
 
 const styles = theme => ({
   root: {
@@ -61,7 +62,7 @@ class Header extends Component {
               {this.props.user ?
                 <HeaderUser user={this.props.user}/>
                 :
-                <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>}
+                <Link to={{pathname: AUTH_LOGIN_PATH}}><Button type="primary">Login</Button></Link>}
             </div>
           </Toolbar>
         </AppBar>
