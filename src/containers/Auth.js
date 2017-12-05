@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import AppInput from "../components/UI/Input/AppInput";
-import {Button, CircularProgress, Paper, Typography, withStyles} from "material-ui";
+import {CircularProgress, Paper, Typography, withStyles} from "material-ui";
 import _ from 'lodash';
 import {connect} from "react-redux";
 import * as actionCreators from "../store/actions/index";
@@ -11,6 +11,8 @@ import {Redirect} from "react-router-dom";
 import {INDEX_PATH} from "../constants/RouterConstants";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
+import { Button } from 'reactstrap';
+
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -26,6 +28,10 @@ const LoginContainer = styled.div`
   padding: 20px;
   margin: 0 auto;
   text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 `;
 
 const LoginBtn = styled(Button)`
@@ -126,7 +132,7 @@ class Auth extends Component {
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
         <LoginBtn className="submitButton" disabled={!this.state.loginFormValid || this.props.loading} type="submit"
-                color="accent">
+                  color="accent">
           {this.props.loading ? <CircularProgress color="accent" size={24}/> : 'Login'}
         </LoginBtn>
       </form>
@@ -139,16 +145,14 @@ class Auth extends Component {
 
     return (
       <LoginContainer>
-        <Paper className={classes.root} elevation={4}>
-          <Typography type="headline" component="h3">
-            Login
-          </Typography>
-          <Typography color="accent" component="p">
-            {this.props.error}
-          </Typography>
-          {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
-          {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
-        </Paper>
+        <Typography type="headline" component="h3">
+          Login
+        </Typography>
+        <Typography color="accent" component="p">
+          {this.props.error}
+        </Typography>
+        {!this.props.user ? this.loginForm() : `Logged as ${this.props.user.name}`}
+        {this.props.user ? <Redirect to={INDEX_PATH}/> : null}
 
       </LoginContainer>
     )
