@@ -11,6 +11,7 @@ import {
 import MenuIcon from 'material-ui-icons/Menu';
 import HeaderUser from "../../components/HeaderUser";
 import PropTypes from 'prop-types';
+import styled from "styled-components";
 
 const styles = theme => ({
   root: {
@@ -27,6 +28,15 @@ const styles = theme => ({
     width: 320,
   }
 });
+
+const AppHeader = styled.div`
+  position: fixed !important;
+  top:0;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+`;
+
 
 /**
  * Main navigation component
@@ -48,60 +58,62 @@ class Header extends Component {
     const {classes} = this.props;
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
-              <MenuIcon/>
-            </IconButton>
-            <Typography type="title" className={classes.flex+' text-center'} color="inherit">
-              Expense splitter
-            </Typography>
-            <div className="userInfo">
-              {this.props.user ?
-                <HeaderUser user={this.props.user}/>
-                :
-                <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>}
+      <AppHeader>
+        <div style={styles.root}>
+          <AppBar position="static" color="primary">
+            <Toolbar>
+              <IconButton onClick={this.toggleDrawer} color="contrast" aria-label="Menu">
+                <MenuIcon/>
+              </IconButton>
+              <Typography type="title" className={classes.flex + ' text-center'} color="inherit">
+                Expense splitter
+              </Typography>
+              <div className="userInfo">
+                {this.props.user ?
+                  <HeaderUser user={this.props.user}/>
+                  :
+                  <Link to={{pathname: AUTH_LOGIN_PATH}}><Button raised color="accent">Login</Button></Link>}
+              </div>
+            </Toolbar>
+          </AppBar>
+          <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer}>
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={this.toggleDrawer}
+              onKeyDown={this.toggleDrawer}
+              style={styles.drawer}
+            >
+              <List>
+                <Link to={{pathname: INDEX_PATH}}>
+                  <ListItem button>
+                    <ListItemText primary="Dashboard"/>
+                  </ListItem>
+                </Link>
+                <Link to={{pathname: MANAGE_PATH}}>
+                  <ListItem button>
+                    <ListItemText primary="Manage"/>
+                  </ListItem>
+                </Link>
+                <Link to={{pathname: SETTINGS_PATH}}>
+                  <ListItem button>
+                    <ListItemText primary="Settings"/>
+                  </ListItem>
+                </Link>
+              </List>
+              <Divider/>
+              <List>
+                <ListItem button>
+                  <ListItemText primary="Placeholder"/>
+                </ListItem>
+                <ListItem button component="a" href="#simple-list">
+                  <ListItemText primary="Placeholder"/>
+                </ListItem>
+              </List>
             </div>
-          </Toolbar>
-        </AppBar>
-        <Drawer open={this.state.drawerOpen} onRequestClose={this.toggleDrawer}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer}
-            onKeyDown={this.toggleDrawer}
-            style={styles.drawer}
-          >
-            <List>
-              <Link to={{pathname: INDEX_PATH}}>
-                <ListItem button>
-                  <ListItemText primary="Dashboard"/>
-                </ListItem>
-              </Link>
-              <Link to={{pathname: MANAGE_PATH}}>
-                <ListItem button>
-                  <ListItemText primary="Manage"/>
-                </ListItem>
-              </Link>
-              <Link to={{pathname: SETTINGS_PATH}}>
-                <ListItem button>
-                  <ListItemText primary="Settings"/>
-                </ListItem>
-              </Link>
-            </List>
-            <Divider/>
-            <List>
-              <ListItem button>
-                <ListItemText primary="Placeholder"/>
-              </ListItem>
-              <ListItem button component="a" href="#simple-list">
-                <ListItemText primary="Placeholder"/>
-              </ListItem>
-            </List>
-          </div>
-        </Drawer>
-      </div>
+          </Drawer>
+        </div>
+      </AppHeader>
     )
   }
 }

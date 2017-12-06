@@ -11,8 +11,8 @@ import {Redirect} from "react-router-dom";
 import {INDEX_PATH} from "../constants/RouterConstants";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import { Button } from 'reactstrap';
-
+import {Button} from 'reactstrap';
+import colors from '../constants/colors';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -32,6 +32,14 @@ const LoginContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  background-color: ${colors.red};
+`;
+
+const AppLogo = styled.div`
+  position: relative;
+  top: -80px;
+  font-size: 30px;
+
 `;
 
 const LoginBtn = styled(Button)`
@@ -131,9 +139,13 @@ class Auth extends Component {
     return (
       <form className={this.state.formSubmitted ? 'submitted' : null} onSubmit={this.submitLoginForm.bind(this)}>
         {this.loginFormControls()}
-        <LoginBtn className="submitButton" disabled={!this.state.loginFormValid || this.props.loading} type="submit"
-                  color="accent">
-          {this.props.loading ? <CircularProgress color="accent" size={24}/> : 'Login'}
+        <LoginBtn className="submitButton"
+                  disabled={!this.state.loginFormValid || this.props.loading}
+                  outline
+                  type="submit"
+                  color="light"
+        >
+          {this.props.loading ? <CircularProgress color="default" size={24}/> : 'Login'}
         </LoginBtn>
       </form>
     )
@@ -145,9 +157,7 @@ class Auth extends Component {
 
     return (
       <LoginContainer>
-        <Typography type="headline" component="h3">
-          Login
-        </Typography>
+        <AppLogo>Expense Splitter</AppLogo>
         <Typography color="accent" component="p">
           {this.props.error}
         </Typography>
